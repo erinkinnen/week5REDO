@@ -3,45 +3,52 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
       build: {
-        src: 'client/scripts.client.js',
+        src: 'client/scripts/client.js',
         dest: 'server/public/scripts/client.min.js'
       }
-    },//end uglify
+    },
     copy: {
       html: {
-        cwd: 'client/views/',
-        src: ['index.html'],
-        dest: 'server/public/views/'
+        expand: true,
+        cwd: 'client/views/', // Current working directory
+        src: ['index.html'], // List of files to copy
+        dest: 'server/public/views/' // Destination
       },
       css: {
-        cwd: 'client/styles',
-        src: ['styles.css'],
-        dest: 'server/public/views/'
+        expand: true,
+        cwd: 'client/styles/', // Current working directory
+        src: ['style.css'], // List of files to copy
+        dest: 'server/public/views/' // Destination
       },
       scripts: {
-        cwd: 'client/scripts/',
-        src: '[client.js]',
-        dest: 'server/public/scripts/'
+        expand: true,
+        cwd: 'client/scripts/', // Current working directory
+        src: ['client.js'], // List of files to copy
+        dest: 'server/public/scripts/' // Destination
       },
       angular: {
-        cwd: 'node_modules/angular',
-        src: ['angular/*'],
-        dest: 'server/public/vendors/angular/'
+        expand: true,
+        cwd: 'node_modules/angular/', // Current working directory
+        src: ['angular.*'], // List of files to copy
+        dest: 'server/public/vendors/angular/' // Destination
       },
       bootstrap: {
-        cwd: 'node_modules/bootstrap/dist/',
-        src: ['css/*.css', 'js/*.js', 'fonts/*.*'],
-        dest: 'server/public/vendors/bootstrap'
+        expand: true,
+        cwd: 'node_modules/bootstrap/dist/', // Current working directory
+        src: ['css/*.css','fonts/*.*'], // List of files to copy
+        dest: 'server/public/vendors/bootstrap/' // Destination
       }
-    },//end copy
+    },
     watch: {
-      files: ['client/**/*.*'],
+      files: ['client/**/*.*'], // All files in the client folder
       tasks: ['uglify', 'copy']
-    }//end watch
-  });//end of initConfig
+    }
+  });
+  // LOAD PLUGIN: Bring the plugin into the project
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['uglify', 'copy', 'watch']);
-};//end module.exports
+  // REGISTER TASK: Actually use the plugin
+  grunt.registerTask('default', ['uglify','copy','watch']);
+};
